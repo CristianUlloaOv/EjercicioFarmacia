@@ -31,23 +31,23 @@ def get_shop():
         #Variable de respuesta al cliente de tipo http status
         response_data = None
 
-        # EL consumo a la API obtener comunas no se utiliza más adelante, ya que se filtra por comuna directamente en la API de Locales
+        # EL consumo de la siguiente API obtener comunas no se utiliza, ya que se filtra por comuna directamente en la API de Locales
         encoder = MultipartEncoder({'reg_id': '7'})
         response_comunas = requests.post(
             'https://midastest.minsal.cl/farmacias/maps/index.php/utilidades/maps_obtener_comunas_por_regiones',
             data=encoder, headers={'Content-Type': encoder.content_type})
         comunas = (response_comunas.content).decode("utf8")
 
-        #Obtener filtros al consumir API del Body formato JSON
+        #Varaible que Obtiene filtros al consumir API, por medio del Body formato en JSON
         parameters_input = request.get_json()
 
-        #Validamos si viene el parametro 'comuna_nombre' dentro del Body en Formato JSON
+        #Validamos si viene el parametro 'comuna_nombre'.
         if 'comuna_nombre' in parameters_input:
             comuna = parameters_input['comuna_nombre']
         else:
             response_data = ('No existe parámetro de entrada comuna_nombre', 400)
 
-        # Validamos si viene el parametro 'local_nombre' dentro del Body en Formato JSON
+        # Validamos si viene el parametro 'local_nombre'.
         if 'local_nombre' in parameters_input:
             name_shop = parameters_input['local_nombre']
         else:
